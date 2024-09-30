@@ -12,8 +12,8 @@ async function bootstrap() {
   // Enable swagger
   const config = new DocumentBuilder()
     .setTitle('Floorplan API')
-    .setDescription('IAW - Trabajo Integrador')
-    .setVersion('1.0')
+    .setDescription('IAW - Trabajo Integrador. Manuel Silenzi')
+    .setVersion('0.0')
     .build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, document)
