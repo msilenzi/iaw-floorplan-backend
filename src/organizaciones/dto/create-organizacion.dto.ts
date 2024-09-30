@@ -1,4 +1,5 @@
 import { IsMongoId, IsNotEmpty, IsString } from 'class-validator'
+import { Types } from 'mongoose'
 
 export class CreateOrganizacionDto {
   @IsString()
@@ -11,5 +12,5 @@ export class CreateOrganizacionDto {
   regexExpediente: string
 
   @IsMongoId()
-  usuarioPropietario: string
+  usuarioPropietario: Types.ObjectId
 }

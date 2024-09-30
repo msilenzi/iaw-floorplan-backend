@@ -20,24 +20,24 @@ export class UsuariosService {
     return await this.usuarioModel.find().exec()
   }
 
-  async findOne(id: string) {
+  async findById(id: Types.ObjectId) {
     return await this.usuarioModel.findById(id).exec()
   }
 
-  // async update(id: string, updateUsuarioDto: UpdateUsuarioDto) {
+  // async update(id: Types.ObjectId, updateUsuarioDto: UpdateUsuarioDto) {
   //   return await this.usuarioModel
   //     .findByIdAndUpdate(id, updateUsuarioDto, { new: true })
   //     .exec()
   // }
 
-  // async remove(id: string) {
+  // async remove(id: Types.ObjectId) {
   //   return await await this.usuarioModel.findByIdAndDelete(id).exec()
   // }
 
   // TODO: verificar si es necesario que sae asíncrona
   // ChatGPT dice que es por seguridad
   async addOrganizacionPropietaria(
-    idUsuarioPropietario: string,
+    idUsuarioPropietario: Types.ObjectId,
     idOrganizacion: Types.ObjectId
   ) {
     await this.usuarioModel.findByIdAndUpdate(idUsuarioPropietario, {

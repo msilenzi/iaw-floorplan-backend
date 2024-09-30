@@ -12,6 +12,7 @@ import { CreateUsuarioDto } from './dto/create-usuario.dto'
 // import { UpdateUsuarioDto } from './dto/update-usuario.dto'
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe'
 import { ApiTags } from '@nestjs/swagger'
+import { Types } from 'mongoose'
 
 @ApiTags('usuarios')
 @Controller('usuarios')
@@ -34,20 +35,20 @@ export class UsuariosController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseMongoIdPipe) id: string) {
-    return this.usuariosService.findOne(id)
+  findOne(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
+    return this.usuariosService.findById(id)
   }
 
   // @Patch(':id')
   // update(
-  //   @Param('id', ParseMongoIdPipe) id: string,
+  //   @Param('id', ParseMongoIdPipe) id: Types.ObjectId,
   //   @Body() updateUsuarioDto: UpdateUsuarioDto
   // ) {
   //   return this.usuariosService.update(id, updateUsuarioDto)
   // }
 
   // @Delete(':id')
-  // remove(@Param('id', ParseMongoIdPipe) id: string) {
+  // remove(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
   //   return this.usuariosService.remove(id)
   // }
 }
