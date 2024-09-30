@@ -1,0 +1,91 @@
+@startuml db
+
+' hide the spot
+' hide circle
+
+package Enums {
+  enum EnumTipoDeObra {
+    CONSTRUCCION
+    AMPLIACION
+    REFACCION
+    DEMOLICION
+    DEMOLICION_Y_CONSTRUCCION
+    DOCUMENTACION
+  }
+
+  enum EnumDestino {
+    UNIFAMILIAR
+    MULTIFAMILIAR
+    AGRUPADA
+    OFICINA
+    COMERCIO
+    INDUSTRIA
+  }
+
+  enum EnumEstadoProyecto {
+    APROBADO
+    RECHAZADO
+    PENDIENTE
+  }
+
+  EnumTipoDeObra -[#f000]- EnumDestino
+
+  EnumDestino -[#f000]- EnumEstadoProyecto
+}
+
+class Usuario {
+  id: string
+  nombre: string
+}
+
+class Proyecto {
+  - id: string
+  - nombre?: string
+  - expediente: string
+  - obra: EnumTipoDeObra
+  - destino: EnumDestino
+  - ubicacion: string
+  - otros?: Object
+  - referencias?: string
+  - antecedentes?: string
+  - propietario
+  - proyectistas
+  - direccionTecnica
+  - estado: EnumEstadoProyecto
+}
+
+class Organizacion {
+  - id: string
+  - regexExpediente: string
+  - nombre: string
+}
+
+class Etiqueta {
+  id: string
+  valor: string
+}
+
+class Plano {
+  escala: string
+
+}
+
+Usuario "1" - "*" Organizacion : id_propietario
+
+Organizacion "*" - "*" Usuario : id_miembros
+
+Organizacion "1" -- "*" Proyecto : id_organizacion
+
+Proyecto "1" -- "*" Recurso : id_proyecto
+
+Recurso "1" - "*" Plano : id_recurso
+
+Proyecto "1" - "*" Etiqueta : id_proyecto
+
+Etiqueta "*" - "*" Plano : id_proyecto
+
+Usuario "1" -- "*" Recurso : id_creador
+
+Usuario "1" -- "*" Plano : id_creador
+
+@enduml
