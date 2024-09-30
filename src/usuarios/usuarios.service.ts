@@ -3,7 +3,7 @@ import { CreateUsuarioDto } from './dto/create-usuario.dto'
 // import { UpdateUsuarioDto } from './dto/update-usuario.dto'
 import { InjectModel } from '@nestjs/mongoose'
 import { Usuario, UsuarioDocument } from './schemas/usuario.schema'
-import { Model } from 'mongoose'
+import { Model, Types } from 'mongoose'
 
 @Injectable()
 export class UsuariosService {
@@ -33,4 +33,15 @@ export class UsuariosService {
   // async remove(id: string) {
   //   return await await this.usuarioModel.findByIdAndDelete(id).exec()
   // }
+
+  // TODO: verificar si es necesario que sae asíncrona
+  // ChatGPT dice que es por seguridad
+  async addOrganizacionPropietaria(
+    idUsuarioPropietario: string,
+    idOrganizacion: Types.ObjectId
+  ) {
+    await this.usuarioModel.findByIdAndUpdate(idUsuarioPropietario, {
+      $addToSet: { organizacionesPropietarias: idOrganizacion },
+    })
+  }
 }
