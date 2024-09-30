@@ -20,7 +20,7 @@ export class UsuariosService {
     return await this.usuarioModel.find().exec()
   }
 
-  async findById(id: Types.ObjectId) {
+  async findOneById(id: Types.ObjectId) {
     return await this.usuarioModel.findById(id).exec()
   }
 

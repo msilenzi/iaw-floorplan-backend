@@ -35,8 +35,8 @@ export class UsuariosController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
-    return this.usuariosService.findById(id)
+  findOneById(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
+    return this.usuariosService.findOneById(id)
   }
 
   // @Patch(':id')
