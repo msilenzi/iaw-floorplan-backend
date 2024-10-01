@@ -11,10 +11,10 @@ export class Usuario {
   @Prop({ required: true })
   apellido: string
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'organizaciones' }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Organizacion' }] })
   organizacionesPropietarias: Types.ObjectId[]
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'organizaciones' }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Organizacion' }] })
   organizacionesMiembro: Types.ObjectId[]
 }
 

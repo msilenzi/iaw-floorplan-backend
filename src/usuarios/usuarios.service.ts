@@ -4,6 +4,7 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto'
 import { InjectModel } from '@nestjs/mongoose'
 import { Usuario, UsuarioDocument } from './schemas/usuario.schema'
 import { Model, Types } from 'mongoose'
+import { Organizacion } from 'src/organizaciones/schemas/organizacion.schema'
 
 @Injectable()
 export class UsuariosService {
@@ -22,6 +23,38 @@ export class UsuariosService {
 
   async findOneById(id: Types.ObjectId) {
     return await this.usuarioModel.findById(id).exec()
+  }
+
+  async findOrganizacionesMiembro(id: Types.ObjectId) {
+    return (
+      await this.usuarioModel.findById(id).populate({
+        path: 'organizacionesMiembro',
+        model: Organizacion.name,
+        populate: [
+          {
+            path: 'usuariosMiembros',
+            model: Usuario.name,
+          },
+          {
+            path: 'usuarioPropietario',
+            model: Usuario.name,
+          },
+        ],
+      })
+    )?.organizacionesMiembro
+  }
+
+  async findOrganizacionesPropietario(id: Types.ObjectId) {
+    return (
+      await this.usuarioModel.findById(id).populate({
+        path: 'organizacionesPropietarias',
+        model: Organizacion.name,
+        populate: {
+          path: 'usuariosMiembros',
+          model: Usuario.name,
+        },
+      })
+    )?.organizacionesPropietarias
   }
 
   async update(id: Types.ObjectId, updateUsuarioDto: UpdateUsuarioDto) {

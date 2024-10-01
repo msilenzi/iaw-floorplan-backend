@@ -13,6 +13,7 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto'
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe'
 import { ApiParam, ApiTags } from '@nestjs/swagger'
 import { Types } from 'mongoose'
+import { UserNotFoundException } from 'src/common/exceptions'
 
 @ApiTags('usuarios')
 @Controller('usuarios')
@@ -33,6 +34,30 @@ export class UsuariosController {
   @Get()
   findAll() {
     return this.usuariosService.findAll()
+  }
+
+  /**
+   * Devuelve todas las organizaciones de las que es miembro un usuario
+   */
+  @Get(':id/organizaciones/miembro')
+  @ApiParam({ name: 'id', type: 'string', description: 'ID del usuario' })
+  async findOrganizacionesMiembro(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
+    if (!(await this.usuariosService.userExists(id))) {
+      throw new UserNotFoundException(id)
+    }
+    return this.usuariosService.findOrganizacionesMiembro(id)
+  }
+
+  /**
+   * Devuelve todas las organizaciones de las que es propietario un usuario
+   */
+  @Get(':id/organizaciones/propietario')
+  @ApiParam({ name: 'id', type: 'string', description: 'ID del usuario' })
+  async findOrganizacionesPropietario(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
+    if (!(await this.usuariosService.userExists(id))) {
+      throw new UserNotFoundException(id)
+    }
+    return this.usuariosService.findOrganizacionesPropietario(id)
   }
 
   /**
