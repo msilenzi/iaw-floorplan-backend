@@ -12,6 +12,7 @@ export class Organizacion {
   @Prop({ required: true })
   regexExpediente: string
 
+  // TODO: Revisar si la unión está bien (ChatGPT again)
   @Prop({ type: Types.ObjectId, ref: 'usuarios', required: true })
   usuarioPropietario: Types.ObjectId | Usuario
 

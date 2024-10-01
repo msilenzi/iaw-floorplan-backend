@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { CreateOrganizacionDto } from './dto/create-organizacion.dto'
 import { InjectModel } from '@nestjs/mongoose'
 import {
   Organizacion,
@@ -7,6 +6,7 @@ import {
 } from './schemas/organizacion.schema'
 import { Model } from 'mongoose'
 import { UsuariosService } from 'src/usuarios/usuarios.service'
+import { CreateOrganizacionSanitized } from './organizaciones.controller'
 
 @Injectable()
 export class OrganizacionesService {
@@ -16,16 +16,14 @@ export class OrganizacionesService {
     private readonly usuariosService: UsuariosService
   ) {}
 
-  async create(createOrganizacionDto: CreateOrganizacionDto) {
-    const nuevaOrganizacion = this.organizacionModel.create(
-      createOrganizacionDto
-    )
+  async create(organizacion: CreateOrganizacionSanitized) {
+    const nuevaOrganizacion = await this.organizacionModel.create(organizacion)
 
     // TODO: verificar si es necesario hacer el await
     // ChatGPT dice que por seguridad
     await this.usuariosService.addOrganizacionPropietaria(
-      createOrganizacionDto.usuarioPropietario,
-      (await nuevaOrganizacion)._id
+      organizacion.usuarioPropietario,
+      nuevaOrganizacion._id
     )
 
     return nuevaOrganizacion

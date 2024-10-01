@@ -34,7 +34,7 @@ export class UsuariosService {
   //   return await await this.usuarioModel.findByIdAndDelete(id).exec()
   // }
 
-  // TODO: verificar si es necesario que sae asíncrona
+  // TODO: verificar si es necesario que sea asíncrona
   // ChatGPT dice que es por seguridad
   async addOrganizacionPropietaria(
     idUsuarioPropietario: Types.ObjectId,
@@ -43,5 +43,9 @@ export class UsuariosService {
     await this.usuarioModel.findByIdAndUpdate(idUsuarioPropietario, {
       $addToSet: { organizacionesPropietarias: idOrganizacion },
     })
+  }
+
+  async userExists(id: Types.ObjectId): Promise<boolean> {
+    return (await this.findOneById(id)) !== null
   }
 }
