@@ -12,5 +12,6 @@ import { UsuariosModule } from 'src/usuarios/usuarios.module'
   ],
   controllers: [OrganizacionesController],
   providers: [OrganizacionesService],
+  exports: [OrganizacionesService],
 })
 export class OrganizacionesModule {}

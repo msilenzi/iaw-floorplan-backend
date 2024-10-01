@@ -16,6 +16,9 @@ export class Organizacion {
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Usuario' }] })
   usuariosMiembros: Types.ObjectId[]
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Proyecto' }] })
+  proyectos: Types.ObjectId[]
 }
 
 export const OrganizacionSchema = SchemaFactory.createForClass(Organizacion)

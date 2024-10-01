@@ -54,6 +54,12 @@ export class OrganizacionesService {
     return { usuarioPropietario: data.usuarioPropietario, usuariosMiembros: data.usuariosMiembros }
   }
 
+  async addProyecto(idOrganizacion: Types.ObjectId, idProyecto: Types.ObjectId) {
+    await this.organizacionModel.findByIdAndUpdate(idOrganizacion, {
+      $addToSet: { proyectos: idProyecto },
+    })
+  }
+
   //
   // Validations
 

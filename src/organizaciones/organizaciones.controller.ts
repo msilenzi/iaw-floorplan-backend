@@ -84,7 +84,7 @@ export class OrganizacionesController {
   //
   // HELPERS
 
-  private sanitizeCreateOrganizacionDto(dto: CreateOrganizacionDto) {
+  private sanitizeCreateOrganizacionDto(dto: CreateOrganizacionDto): CreateOrganizacionSanitized {
     return {
       nombre: removeExtraSpaces(dto.nombre),
       regexExpediente: dto.regexExpediente,
