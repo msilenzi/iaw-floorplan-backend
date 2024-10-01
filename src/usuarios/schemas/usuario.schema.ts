@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { HydratedDocument, Types } from 'mongoose'
-import { Organizacion } from 'src/organizaciones/schemas/organizacion.schema'
 
 export type UsuarioDocument = HydratedDocument<Usuario>
 
@@ -13,10 +12,10 @@ export class Usuario {
   apellido: string
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'organizaciones' }] })
-  organizacionesPropietarias: Types.ObjectId[] | Organizacion[]
+  organizacionesPropietarias: Types.ObjectId[]
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'organizaciones' }] })
-  organizacionesMiembro: Types.ObjectId[] | Organizacion[]
+  organizacionesMiembro: Types.ObjectId[]
 }
 
 export const UsuarioSchema = SchemaFactory.createForClass(Usuario)

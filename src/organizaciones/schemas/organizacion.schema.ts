@@ -14,10 +14,10 @@ export class Organizacion {
 
   // TODO: Revisar si la unión está bien (ChatGPT again)
   @Prop({ type: Types.ObjectId, ref: 'usuarios', required: true })
-  usuarioPropietario: Types.ObjectId | Usuario
+  usuarioPropietario: Types.ObjectId
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'usuarios' }] })
-  usuariosMiembros: Types.ObjectId[] | Usuario[]
+  usuariosMiembros: Types.ObjectId[]
 }
 
 export const OrganizacionSchema = SchemaFactory.createForClass(Organizacion)
