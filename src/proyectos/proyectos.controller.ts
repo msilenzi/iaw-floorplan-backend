@@ -1,6 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post } from '@nestjs/common'
 import { ProyectosService } from './proyectos.service'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiParam, ApiTags } from '@nestjs/swagger'
 import { CreateProyectoDto } from './dto/create-proyecto.dto'
 import {
   EnumDestinoProyecto,
@@ -11,6 +11,7 @@ import { Types } from 'mongoose'
 import { removeExtraSpaces } from 'src/common/helpers/remove-extra-spaces'
 import { OrganizacionesService } from 'src/organizaciones/organizaciones.service'
 import { OrganizationNotFoundException } from 'src/common/exceptions'
+import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe'
 
 export type CreateProyectoSanitized = {
   expediente: string
@@ -44,6 +45,24 @@ export class ProyectosController {
     }
 
     return this.proyectosService.create(sanitizedDto)
+  }
+
+  /**
+   * Devuelve un arreglo con todos los proyectos del sistema
+   */
+  @Get()
+  async findAll() {
+    return this.proyectosService.findAll()
+  }
+
+  /**
+   * Devuelve la entrada del proyecto con el id que recibe como parámetro.
+   * O un objeto vacío en caso que no exista.
+   */
+  @Get(':id')
+  @ApiParam({ name: 'id', type: 'string', description: 'ID del proyecto' })
+  findOneById(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
+    return this.proyectosService.findOneById(id)
   }
 
   //
