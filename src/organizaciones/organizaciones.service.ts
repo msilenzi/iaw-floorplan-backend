@@ -5,6 +5,7 @@ import { Model, Types } from 'mongoose'
 import { UsuariosService } from 'src/usuarios/usuarios.service'
 import { CreateOrganizacionSanitized } from './organizaciones.controller'
 import { Usuario } from 'src/usuarios/schemas/usuario.schema'
+import { Proyecto } from 'src/proyectos/schemas/proyecto.schema'
 
 @Injectable()
 export class OrganizacionesService {
@@ -52,6 +53,16 @@ export class OrganizacionesService {
     if (data === null) return {}
 
     return { usuarioPropietario: data.usuarioPropietario, usuariosMiembros: data.usuariosMiembros }
+  }
+
+  async findAllProyectos(id: Types.ObjectId) {
+    const data = await this.organizacionModel
+      .findById(id)
+      .populate('proyectos', null, Proyecto.name)
+      .exec()
+
+    if (data === null) return []
+    return data.proyectos
   }
 
   async addProyecto(idOrganizacion: Types.ObjectId, idProyecto: Types.ObjectId) {

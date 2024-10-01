@@ -81,6 +81,18 @@ export class OrganizacionesController {
     return await this.organizacionesService.findAllMiembros(id)
   }
 
+  /**
+   * Devuelve todos los proyectos de una organización
+   */
+  @Get(':id/proyectos')
+  @ApiParam({ name: 'id', type: 'string', description: 'ID de la organización' })
+  async findAllProyectos(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
+    if (!(await this.organizacionesService.organizationExists(id))) {
+      throw new OrganizationNotFoundException(id)
+    }
+    return await this.organizacionesService.findAllProyectos(id)
+  }
+
   //
   // HELPERS
 
