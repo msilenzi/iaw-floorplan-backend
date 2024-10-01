@@ -1,3 +1,4 @@
+import { IsString } from 'class-validator'
 import { IsNotBlankString } from 'src/common/validators/is-not-blank-string.validator'
 
 export class CreateUsuarioDto {
@@ -5,6 +6,7 @@ export class CreateUsuarioDto {
    * nombre del usuario
    * @example John
    */
+  @IsString()
   @IsNotBlankString()
   nombre: string
 
@@ -12,6 +14,7 @@ export class CreateUsuarioDto {
    * apellido del usuario
    * @example Doe
    */
+  @IsString()
   @IsNotBlankString()
   apellido: string
 }
