@@ -11,7 +11,7 @@ import { UsuariosService } from './usuarios.service'
 import { CreateUsuarioDto } from './dto/create-usuario.dto'
 // import { UpdateUsuarioDto } from './dto/update-usuario.dto'
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiParam, ApiTags } from '@nestjs/swagger'
 import { Types } from 'mongoose'
 
 @ApiTags('usuarios')
@@ -21,20 +21,25 @@ export class UsuariosController {
 
   /**
    * Crear un nuevo usuario sin organizaciones.
-   * @param createUsuarioDto: la información del nuevo usuario
-   * @returns el registro de la base de datos del nuevo usuario
    */
   @Post()
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
     return this.usuariosService.create(createUsuarioDto)
   }
 
+  /**
+   * Devuelve un arreglo con todos los usuarios del sistema.
+   */
   @Get()
   findAll() {
     return this.usuariosService.findAll()
   }
 
+  /**
+   * Devuelve la entrada del id que recibe como parámetro. O un objeto vacío en caso que no exista.
+   */
   @Get(':id')
+  @ApiParam({ name: 'id', type: String, description: 'MongoDB ID' })
   findOneById(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     return this.usuariosService.findOneById(id)
   }

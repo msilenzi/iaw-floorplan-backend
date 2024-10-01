@@ -26,6 +26,9 @@ export class OrganizacionesController {
     private readonly usuariosService: UsuariosService
   ) {}
 
+  /**
+   * Crea una nueva organización.
+   */
   @Post()
   async create(@Body() createOrganizacionDto: CreateOrganizacionDto) {
     const sanitizedDto = this.sanitizeCreateOrganizacionDto(
