@@ -51,3 +51,23 @@
 > Quiero ver si es un string o un enum o algo de eso
 
 ...
+
+**Debería agregar timestamps**
+
+> La fecha en la que se creó un usuario, recurso, organización, etc.
+
+...
+
+## Sobre NestJS
+
+**Puedo hacer que un service conozca a otro para realizar tareas**
+
+> Por ejemplo, si al borrar un usuario tengo que aplicar un cambio en las
+> organizaciones definir la operatoria de esos cambios en el service de
+> organizaciones y que el otro simplemente lo llame.
+
+**Quién debería hacer validaciones sobre info en la BD**
+
+> Service o Controller
+
+...
