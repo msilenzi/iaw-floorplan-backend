@@ -45,6 +45,15 @@ export class UsuariosService {
     })
   }
 
+  async addOrganizacionMiembro(
+    idUsuario: Types.ObjectId,
+    idOrganizacion: Types.ObjectId
+  ) {
+    await this.usuarioModel.findByIdAndUpdate(idUsuario, {
+      $addToSet: { organizacionesMiembro: idOrganizacion },
+    })
+  }
+
   async userExists(id: Types.ObjectId): Promise<boolean> {
     return (await this.findOneById(id)) !== null
   }
