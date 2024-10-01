@@ -4,6 +4,7 @@ import { Organizacion, OrganizacionDocument } from './schemas/organizacion.schem
 import { Model, Types } from 'mongoose'
 import { UsuariosService } from 'src/usuarios/usuarios.service'
 import { CreateOrganizacionSanitized } from './organizaciones.controller'
+import { Usuario } from 'src/usuarios/schemas/usuario.schema'
 
 @Injectable()
 export class OrganizacionesService {
@@ -30,13 +31,27 @@ export class OrganizacionesService {
     return await this.organizacionModel.findById(id).exec()
   }
 
-  async addNewMember(organizacionId: Types.ObjectId, usuarioId: Types.ObjectId) {
+  async addNewMiembro(organizacionId: Types.ObjectId, usuarioId: Types.ObjectId) {
     await this.usuariosService.addOrganizacionMiembro(usuarioId, organizacionId)
     return await this.organizacionModel
       .findByIdAndUpdate(organizacionId, {
         $addToSet: { usuariosMiembros: usuarioId },
       })
       .exec()
+  }
+
+  async findAllMiembros(id: Types.ObjectId) {
+    const data = await this.organizacionModel
+      .findById(id)
+      .populate([
+        { path: 'usuarioPropietario', model: Usuario.name },
+        { path: 'usuariosMiembros', model: Usuario.name },
+      ])
+      .exec()
+
+    if (data === null) return {}
+
+    return { usuarioPropietario: data.usuarioPropietario, usuariosMiembros: data.usuariosMiembros }
   }
 
   //

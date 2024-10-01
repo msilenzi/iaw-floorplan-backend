@@ -31,14 +31,8 @@ export class UsuariosService {
         path: 'organizacionesMiembro',
         model: Organizacion.name,
         populate: [
-          {
-            path: 'usuariosMiembros',
-            model: Usuario.name,
-          },
-          {
-            path: 'usuarioPropietario',
-            model: Usuario.name,
-          },
+          { path: 'usuariosMiembros', model: Usuario.name },
+          { path: 'usuarioPropietario', model: Usuario.name },
         ],
       })
     )?.organizacionesMiembro

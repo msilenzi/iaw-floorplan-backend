@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, HttpStatus, Param, Post } from '@nestjs/common'
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common'
 import { ApiParam, ApiTags } from '@nestjs/swagger'
 import { Types } from 'mongoose'
 import { removeExtraSpaces } from 'src/common/helpers/remove-extra-spaces'
@@ -47,7 +47,8 @@ export class OrganizacionesController {
     type: 'string',
     description: 'ID de la organizacion',
   })
-  async addNewMember(
+  @ApiParam({ name: 'id', type: 'string', description: 'ID de la organización' })
+  async addNewMiembro(
     @Param('id', ParseMongoIdPipe) organizationId: Types.ObjectId,
     @Body() addUsuarioOrganizacionDto: AddMiembroOrganizacionDto
   ) {
@@ -65,7 +66,19 @@ export class OrganizacionesController {
       throw new HttpException(`user cannot be added to the organization`, HttpStatus.BAD_REQUEST)
     }
 
-    return await this.organizacionesService.addNewMember(organizationId, userId)
+    return await this.organizacionesService.addNewMiembro(organizationId, userId)
+  }
+
+  /**
+   * Devuelve todos los usuarios que son miembros de una organización
+   */
+  @Get(':id/miembros')
+  @ApiParam({ name: 'id', type: 'string', description: 'ID de la organización' })
+  async findAllMiembros(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
+    if (!(await this.organizacionesService.organizationExists(id))) {
+      throw new OrganizationNotFoundException(id)
+    }
+    return await this.organizacionesService.findAllMiembros(id)
   }
 
   //
