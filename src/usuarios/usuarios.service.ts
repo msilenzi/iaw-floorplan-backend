@@ -25,9 +25,7 @@ export class UsuariosService {
   }
 
   async update(id: Types.ObjectId, updateUsuarioDto: UpdateUsuarioDto) {
-    return await this.usuarioModel
-      .findByIdAndUpdate(id, updateUsuarioDto, { new: true })
-      .exec()
+    return await this.usuarioModel.findByIdAndUpdate(id, updateUsuarioDto, { new: true }).exec()
   }
 
   // async remove(id: Types.ObjectId) {
@@ -45,10 +43,7 @@ export class UsuariosService {
     })
   }
 
-  async addOrganizacionMiembro(
-    idUsuario: Types.ObjectId,
-    idOrganizacion: Types.ObjectId
-  ) {
+  async addOrganizacionMiembro(idUsuario: Types.ObjectId, idOrganizacion: Types.ObjectId) {
     await this.usuarioModel.findByIdAndUpdate(idUsuario, {
       $addToSet: { organizacionesMiembro: idOrganizacion },
     })

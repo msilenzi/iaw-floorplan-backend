@@ -7,9 +7,7 @@ import { UsuariosModule } from 'src/usuarios/usuarios.module'
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Organizacion.name, schema: OrganizacionSchema },
-    ]),
+    MongooseModule.forFeature([{ name: Organizacion.name, schema: OrganizacionSchema }]),
     UsuariosModule,
   ],
   controllers: [OrganizacionesController],

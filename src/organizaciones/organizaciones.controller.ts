@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  HttpException,
-  HttpStatus,
-  Param,
-  Post,
-} from '@nestjs/common'
+import { Body, Controller, HttpException, HttpStatus, Param, Post } from '@nestjs/common'
 import { ApiParam, ApiTags } from '@nestjs/swagger'
 import { Types } from 'mongoose'
 import { removeExtraSpaces } from 'src/common/helpers/remove-extra-spaces'
@@ -13,10 +6,7 @@ import { CreateOrganizacionDto } from './dto/create-organizacion.dto'
 import { OrganizacionesService } from './organizaciones.service'
 import { UsuariosService } from 'src/usuarios/usuarios.service'
 import { AddMiembroOrganizacionDto } from './dto/add-miembro-organizacion.dto'
-import {
-  OrganizationNotFoundException,
-  UserNotFoundException,
-} from 'src/common/exceptions'
+import { OrganizationNotFoundException, UserNotFoundException } from 'src/common/exceptions'
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe'
 
 export type CreateOrganizacionSanitized = {
@@ -38,14 +28,10 @@ export class OrganizacionesController {
    */
   @Post()
   async create(@Body() createOrganizacionDto: CreateOrganizacionDto) {
-    const sanitizedDto = this.sanitizeCreateOrganizacionDto(
-      createOrganizacionDto
-    )
+    const sanitizedDto = this.sanitizeCreateOrganizacionDto(createOrganizacionDto)
 
     // TODO: ¿Debería ir en el service?
-    if (
-      !(await this.usuariosService.userExists(sanitizedDto.usuarioPropietario))
-    ) {
+    if (!(await this.usuariosService.userExists(sanitizedDto.usuarioPropietario))) {
       throw new UserNotFoundException(sanitizedDto.usuarioPropietario)
     }
 
@@ -61,15 +47,13 @@ export class OrganizacionesController {
     type: 'string',
     description: 'ID de la organizacion',
   })
-  async addUser(
+  async addNewMember(
     @Param('id', ParseMongoIdPipe) organizationId: Types.ObjectId,
     @Body() addUsuarioOrganizacionDto: AddMiembroOrganizacionDto
   ) {
     const userId = new Types.ObjectId(addUsuarioOrganizacionDto.idUsuario)
 
-    if (
-      !(await this.organizacionesService.organizationExists(organizationId))
-    ) {
+    if (!(await this.organizacionesService.organizationExists(organizationId))) {
       throw new OrganizationNotFoundException(organizationId)
     }
 
@@ -77,16 +61,8 @@ export class OrganizacionesController {
       throw new UserNotFoundException(userId)
     }
 
-    if (
-      !(await this.organizacionesService.isValidNewMember(
-        organizationId,
-        userId
-      ))
-    ) {
-      throw new HttpException(
-        `user cannot be added to the organization`,
-        HttpStatus.BAD_REQUEST
-      )
+    if (!(await this.organizacionesService.isValidNewMember(organizationId, userId))) {
+      throw new HttpException(`user cannot be added to the organization`, HttpStatus.BAD_REQUEST)
     }
 
     return await this.organizacionesService.addNewMember(organizationId, userId)

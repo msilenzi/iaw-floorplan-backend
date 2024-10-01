@@ -1,9 +1,6 @@
 import { Injectable, Type } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import {
-  Organizacion,
-  OrganizacionDocument,
-} from './schemas/organizacion.schema'
+import { Organizacion, OrganizacionDocument } from './schemas/organizacion.schema'
 import { Model, Types } from 'mongoose'
 import { UsuariosService } from 'src/usuarios/usuarios.service'
 import { CreateOrganizacionSanitized } from './organizaciones.controller'
@@ -16,9 +13,7 @@ export class OrganizacionesService {
     private readonly usuariosService: UsuariosService
   ) {}
 
-  async create(
-    organizacion: CreateOrganizacionSanitized
-  ): Promise<Organizacion> {
+  async create(organizacion: CreateOrganizacionSanitized): Promise<Organizacion> {
     const nuevaOrganizacion = await this.organizacionModel.create(organizacion)
 
     // TODO: verificar si es necesario hacer el await
@@ -35,10 +30,7 @@ export class OrganizacionesService {
     return await this.organizacionModel.findById(id).exec()
   }
 
-  async addNewMember(
-    organizacionId: Types.ObjectId,
-    usuarioId: Types.ObjectId
-  ) {
+  async addNewMember(organizacionId: Types.ObjectId, usuarioId: Types.ObjectId) {
     await this.usuariosService.addOrganizacionMiembro(usuarioId, organizacionId)
     return await this.organizacionModel
       .findByIdAndUpdate(organizacionId, {
