@@ -58,10 +58,7 @@ export class Proyecto {
   @Prop({ type: Types.ObjectId, ref: 'Organizacion', required: true })
   idOrganizacion: Types.ObjectId
 
-  // TODO: definir otros
-  // TODO: definir propietario
-  // TODO: definir proyectistas
-  // TODO: definir dirección técnica
+  // TODO: definir otros, propietario, proyectistas y dirección técnica
 }
 
 export const ProyectoSchema = SchemaFactory.createForClass(Proyecto)

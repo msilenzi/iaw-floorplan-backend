@@ -15,17 +15,6 @@
 
 ...
 
-**Cómo hacer la relación muchos a muchos entre Usuario y Organización**
-
-> Eso. No tengo ni idea
-
-> Un arreglo de miembros en Organización??  
-> _Pero después como hago para saber a que organizaciones pertenece un usuario_
-
-> Lo mismo con un Plano y sus etiquetas
-
-...
-
 **Las etiquetas por proyecto se hacen?**
 
 > Estoy pensando en algo parecido a lo que tiene Notion.
@@ -57,6 +46,14 @@
 > La fecha en la que se creó un usuario, recurso, organización, etc.
 
 ...
+
+**Cómo debería manejar los borrados**
+
+> Qué debería hacer al borrar un usuario, organización, etc.
+>
+> - Borrado físico
+> - Borrado lógico
+> - Borrado lógico y mover a una colección separada
 
 ## Sobre NestJS
 

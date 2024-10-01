@@ -59,8 +59,6 @@ export class UsuariosService {
   //   return await await this.usuarioModel.findByIdAndDelete(id).exec()
   // }
 
-  // TODO: verificar si es necesario que sea asíncrona
-  // ChatGPT dice que es por seguridad
   async addOrganizacionPropietaria(
     idUsuarioPropietario: Types.ObjectId,
     idOrganizacion: Types.ObjectId

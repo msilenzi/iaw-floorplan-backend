@@ -4,7 +4,7 @@
 ' hide circle
 
 package Enums {
-  enum EnumTipoDeObra {
+  enum EnumTipoProyecto {
     CONSTRUCCION
     AMPLIACION
     REFACCION
@@ -13,7 +13,7 @@ package Enums {
     DOCUMENTACION
   }
 
-  enum EnumDestino {
+  enum EnumDestinoProyecto {
     UNIFAMILIAR
     MULTIFAMILIAR
     AGRUPADA
@@ -28,9 +28,9 @@ package Enums {
     PENDIENTE
   }
 
-  EnumTipoDeObra -[#f000]- EnumDestino
+  EnumTipoProyecto -[#f000]- EnumDestinoProyecto
 
-  EnumDestino -[#f000]- EnumEstadoProyecto
+  EnumDestinoProyecto -[#f000]- EnumEstadoProyecto
 }
 
 class Usuario {

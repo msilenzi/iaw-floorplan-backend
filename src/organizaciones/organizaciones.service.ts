@@ -18,8 +18,6 @@ export class OrganizacionesService {
   async create(organizacion: CreateOrganizacionSanitized): Promise<Organizacion> {
     const nuevaOrganizacion = await this.organizacionModel.create(organizacion)
 
-    // TODO: verificar si es necesario hacer el await
-    // ChatGPT dice que por seguridad
     await this.usuariosService.addOrganizacionPropietaria(
       organizacion.usuarioPropietario,
       nuevaOrganizacion._id
